@@ -16,7 +16,17 @@
                      placeholder="e.g. Brooklyn">
             <input type="submit">
         </form>
-        <a href="/resList/show">Show List of Restaurants</a>
+        
+        <br>
+
+        <form method="post" action="/restaurants/byCuisine"> 
+            Show Restaurants by by Borough: 
+              <input type="text" name="cuisine" 
+                     placeholder="e.g. Chinese">
+            <input type="submit">
+        </form>
+
+        <a href="/resList/show">Show your list of restaurants</a>
     <% } %>
 
 

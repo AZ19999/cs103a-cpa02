@@ -140,6 +140,16 @@ app.post('/restaurants/byBorough',
   }
 )
 
+app.post('/restaurants/byCuisine',
+  async (req,res,next) => {
+    const {cuisine} = req.body;
+    const restaurants = await Restaurant.find({cuisine:cuisine})
+    res.locals.restaurants = restaurants
+    res.render('restaurantlist')
+  }
+)
+
+
 app.get('/restaurants/show/:restaurantId',
   // show all info about a course given its courseid
   async (req,res,next) => {
