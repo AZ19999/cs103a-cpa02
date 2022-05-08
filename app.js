@@ -220,44 +220,6 @@ app.get('/courses/show/:courseId',
   }
 )
 
-app.get('/courses/byInst/:email',
-  // show a list of all courses taught by a given faculty
-  async (req,res,next) => {
-    const email = req.params.email+"@brandeis.edu";
-    const courses = await Course.find({instructor:email,independent_study:false})
-    //res.json(courses)
-    res.locals.courses = courses
-    res.render('courselist')
-  } 
-)
-
-app.post('/courses/byInst',
-  // show courses taught by a faculty send from a form
-  async (req,res,next) => {
-    const email = req.body.email+"@brandeis.edu";
-    const courses = 
-       await Course
-               .find({instructor:email,independent_study:false})
-               .sort({term:1,num:1,section:1})
-    //res.json(courses)
-    res.locals.courses = courses
-    res.render('courselist')
-  }
-)
-
-app.post('/courses/byKeyword',
-  // show courses that contain a specfic keyword
-  async (req,res,next) => {
-    const keyword = req.body.keyword;
-    const courses = 
-       await Course
-               .find({name: {$regex: keyword, $options: "$i"},independent_study:false})
-               .sort({term:1,num:1,section:1})
-    res.locals.courses = courses
-    res.render('courselist')
-  }
-)
-
 app.use(isLoggedIn)
 
 app.get('/addCourse/:courseId',
