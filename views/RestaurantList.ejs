@@ -1,5 +1,5 @@
-<h1>The courses are</h1>
-Here we want a ul list with the instructor, coursenum, title, term
+<h1>The restaurants are</h1>
+These are the restaurants!
 <hr>
 <table class="table table-bordered table-striped">
     <thead>
@@ -16,35 +16,17 @@ Here we want a ul list with the instructor, coursenum, title, term
         const cuisine = restaurant.cuisine;
          %>
       <tr class="mb-2"> 
-        <td><%= semester[term%10] %></td>
-        <td>
-            <a href="/courses/show/<%=course._id %>">
-            <%=  course['subject'] %>
-            <%=  course['coursenum'] %>  
-            (Section <%=  course['section'] %>) 
+        <td><%= restaurant.name %></td>
 
-            </a>
+        <td>
+            <%=  restaurant.borough %>
         </td>
 
         <td>
-            <strong><%= course.name %></strong>
+            <%= restaurant.cuisine %>
         </td>
-
-        <td>
-            <%=course.enrolled %>/<%=course.limit || 999 %>/<%= course.waiting %>
-        </td>
-
-        <td>
-            <% for (t of course.strTimes){%> 
-                <%= t %> <br> 
-            <%} %>
-        </td>
-         <!-- <%= JSON.stringify(course.times) %> <br> -->
         
 
-        <td>
-          <%= inst[0]+" "+inst[1]%> <br> <%= " ("+inst[2]+")" %>
-        </td>
     </tr>
     <% } %>
     </tbody>

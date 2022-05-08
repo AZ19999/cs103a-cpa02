@@ -205,7 +205,7 @@ app.post('/restaurants/byBorough',
     const {borough} = req.body;
     const restaurants = await Restaurant.find({borough:borough})
     res.locals.restaurants = restaurants
-    res.render('reslist')
+    res.render('restaurantlist')
   }
 )
 
