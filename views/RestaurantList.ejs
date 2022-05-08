@@ -16,8 +16,12 @@ These are the restaurants!
         const cuisine = restaurant.cuisine;
          %>
       <tr class="mb-2"> 
-        <td><%= restaurant.name %></td>
+        <td>
+            <a href="/restaurants/show/<%=restaurant._id %>">
+                <%=  restaurant.name %>
 
+            </a>
+        </td>
         <td>
             <%=  restaurant.borough %>
         </td>

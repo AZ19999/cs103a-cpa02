@@ -140,30 +140,27 @@ app.post('/restaurants/byBorough',
   }
 )
 
-
-app.get('/restaurant/show/:restaurantId',
+app.get('/restaurants/show/:restaurantId',
   // show all info about a course given its courseid
   async (req,res,next) => {
-    const {courseId} = req.params;
-    const course = await Course.findOne({_id:courseId})
-    res.locals.course = course
-    res.render('course')
+    const {restaurantId} = req.params;
+    const restaurant = await Restaurant.findOne({_id:restaurantId})
+    res.locals.restaurant = restaurant
+    res.render('restaurant')
   }
 )
 
 app.use(isLoggedIn)
 
-app.get('/addResList/:restaurantId',
-  // add a course to the user's schedule
+app.get('/addRestaurant/:restaurantId',
   async (req,res,next) => {
     try {
-      const courseId = req.params.courseId
+      const restaurantId = req.params.restaurantId
       const userId = res.locals.user._id
-      // check to make sure it's not already loaded
-      const lookup = await Schedule.find({courseId,userId})
+      const lookup = await RestaurantList.find({restaurantId,userId})
       if (lookup.length==0){
-        const schedule = new Schedule({courseId,userId})
-        await schedule.save()
+        const resList = new RestaurantList({restaurantId,userId})
+        await resList.save()
       }
       res.redirect('/resList/show')
     } catch(e){
@@ -172,14 +169,13 @@ app.get('/addResList/:restaurantId',
   })
 
 app.get('/resList/show',
-  // show the current user's schedule
+
   async (req,res,next) => {
     try{
       const userId = res.locals.user._id;
       const restaurantIds = 
-         (await Restaurant.find({userId}))
-                        .sort(x => x.term)
-                        .map(x => x.courseId)
+         (await RestaurantList.find({userId}))
+                        .map(x => x.restaurantId)
       res.locals.restaurants = await Restaurant.find({_id:{$in: restaurantIds}})
       res.render('resList')
     } catch(e){
@@ -188,13 +184,13 @@ app.get('/resList/show',
   }
 )
 
-app.get('/resList/remove/:courseId',
+app.get('/resList/remove/:restaurantId',
   // remove a course from the user's schedule
   async (req,res,next) => {
     try {
-      await Schedule.remove(
+      await RestaurantList.remove(
                 {userId:res.locals.user._id,
-                 courseId:req.params.courseId})
+                 restaurantId:req.params.restaurantId})
       res.redirect('/resList/show')
 
     } catch(e){

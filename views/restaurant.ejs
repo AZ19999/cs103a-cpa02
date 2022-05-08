@@ -1,13 +1,16 @@
 <div class="bg-light m-5 p-2 border border-primary border-2">
     <div class="">
-        <span>
-            <%= restaurant.borough %> 
-            <%= restaurant.cuisine %> 
-        </span>
         <strong><%= restaurant.name %></strong>
+            <br>
+            <%= restaurant.cuisine %>
+            <br>
+            <%= restaurant.borough %>
+            <br>
         
     </div>
+    
     <div><a href="/addRestaurant/<%= restaurant['_id'] %>">(add to list)</a></div>
+
 </div>
 
 <hr>

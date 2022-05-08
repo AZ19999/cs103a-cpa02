@@ -1,19 +1,14 @@
 <div class="d-flex flex-wrap text-center overflow-scroll">
     <% for (restaurant of restaurants){%>
         <div class="p-3 m-3 border border-primary bg-light w-33">
-            <a href="/resList/remove/<%= course._id %>">X</a>
-            <%= course['subject'] %>
-            <%= course.coursenum %>
+            <a href="/resList/remove/<%= restaurant._id %>">Remove from List</a>
             <br>
-            Course Name: <%= course.name %>
+            Restaurant Name: <%= restaurant.name %>
             <br>
-            Instructor: <%=course.instructor[0] %>
-            <%=course.instructor[1] %>
-            (<%=course.instructor[2] %>)
+            <%= restaurant.cuisine %>
             <br>
-            Times: <%= course.strTimes%>
+            <%= restaurant.borough %>
             <br>
-            Enrolled/Capacity/Waiting: <%=course.enrolled %>/<%=course.limit || 999 %>/<%= course.waiting %>
             
         </div>
         
