@@ -18,7 +18,6 @@ const axios = require("axios")
 // *********************************************************** //
 //  Loading models
 // *********************************************************** //
-const ToDoItem = require("./models/ToDoItem")
 const Restaurant = require('./models/Restaurant')
 const RestaurantList = require('./models/RestaurantList')
 
@@ -114,69 +113,6 @@ app.get("/about", (req, res, next) => {
 });
 
 
-
-/*
-    ToDoList routes
-*/
-app.get('/todo',
-  isLoggedIn,   // redirect to /login if user is not logged in
-  async (req,res,next) => {
-    try{
-      let userId = res.locals.user._id;  // get the user's id
-      let items = await ToDoItem.find({userId:userId}); // lookup the user's todo items
-      res.locals.items = items;  //make the items available in the view
-      res.render("toDo");  // render to the toDo page
-    } catch (e){
-      next(e);
-    }
-  }
-  )
-
-  app.post('/todo/add',
-  isLoggedIn,
-  async (req,res,next) => {
-    try{
-      const {title,description} = req.body; // get title and description from the body
-      const userId = res.locals.user._id; // get the user's id
-      const createdAt = new Date(); // get the current date/time
-      let data = {title, description, userId, createdAt,} // create the data object
-      let item = new ToDoItem(data) // create the database object (and test the types are correct)
-      await item.save() // save the todo item in the database
-      res.redirect('/todo')  // go back to the todo page
-    } catch (e){
-      next(e);
-    }
-  }
-  )
-
-  app.get("/todo/delete/:itemId",
-    isLoggedIn,
-    async (req,res,next) => {
-      try{
-        const itemId=req.params.itemId; // get the id of the item to delete
-        await ToDoItem.deleteOne({_id:itemId}) // remove that item from the database
-        res.redirect('/todo') // go back to the todo page
-      } catch (e){
-        next(e);
-      }
-    }
-  )
-
-  app.get("/todo/completed/:value/:itemId",
-  isLoggedIn,
-  async (req,res,next) => {
-    try{
-      const itemId=req.params.itemId; // get the id of the item to delete
-      const completed = req.params.value=='true';
-      await ToDoItem.findByIdAndUpdate(itemId,{completed}) // remove that item from the database
-      res.redirect('/todo') // go back to the todo page
-    } catch (e){
-      next(e);
-    }
-  }
-)
-
-
 /* ************************
   Loading (or reloading) the data into a collection
    ************************ */
@@ -187,11 +123,6 @@ app.get('/upsertDB',
   async (req,res,next) => {
     for (restaurant of restaurants){
       const {address,borough,cuisine,grades,name,restaurant_id}=course;
-      //const num = getNum(coursenum);
-      //const strTime = times2str(times);
-      //course.num = num
-      //course.suffix = coursenum.slice(num.length)
-      //course.strTimes = strTime
       await restaurants.findOneAndUpdate({address,borough,cuisine,grades,name,restaurant_id},restaurant,{upsert:true})
     }
     const num = await restaurants.find({}).count();
@@ -209,20 +140,20 @@ app.post('/restaurants/byBorough',
   }
 )
 
-app.get('/courses/show/:courseId',
+
+app.get('/restaurant/show/:restaurantId',
   // show all info about a course given its courseid
   async (req,res,next) => {
     const {courseId} = req.params;
     const course = await Course.findOne({_id:courseId})
     res.locals.course = course
-    //res.json(course)
     res.render('course')
   }
 )
 
 app.use(isLoggedIn)
 
-app.get('/addCourse/:courseId',
+app.get('/addResList/:restaurantId',
   // add a course to the user's schedule
   async (req,res,next) => {
     try {
@@ -234,13 +165,13 @@ app.get('/addCourse/:courseId',
         const schedule = new Schedule({courseId,userId})
         await schedule.save()
       }
-      res.redirect('/schedule/show')
+      res.redirect('/resList/show')
     } catch(e){
       next(e)
     }
   })
 
-app.get('/schedule/show',
+app.get('/resList/show',
   // show the current user's schedule
   async (req,res,next) => {
     try{
@@ -250,21 +181,21 @@ app.get('/schedule/show',
                         .sort(x => x.term)
                         .map(x => x.courseId)
       res.locals.courses = await Course.find({_id:{$in: courseIds}})
-      res.render('schedule')
+      res.render('resList')
     } catch(e){
       next(e)
     }
   }
 )
 
-app.get('/schedule/remove/:courseId',
+app.get('/resList/remove/:courseId',
   // remove a course from the user's schedule
   async (req,res,next) => {
     try {
       await Schedule.remove(
                 {userId:res.locals.user._id,
                  courseId:req.params.courseId})
-      res.redirect('/schedule/show')
+      res.redirect('/resList/show')
 
     } catch(e){
       next(e)
