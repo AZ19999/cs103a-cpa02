@@ -176,11 +176,11 @@ app.get('/resList/show',
   async (req,res,next) => {
     try{
       const userId = res.locals.user._id;
-      const courseIds = 
-         (await Schedule.find({userId}))
+      const restaurantIds = 
+         (await Restaurant.find({userId}))
                         .sort(x => x.term)
                         .map(x => x.courseId)
-      res.locals.courses = await Course.find({_id:{$in: courseIds}})
+      res.locals.restaurants = await Restaurant.find({_id:{$in: restaurantIds}})
       res.render('resList')
     } catch(e){
       next(e)
