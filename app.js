@@ -19,8 +19,8 @@ const axios = require("axios")
 //  Loading models
 // *********************************************************** //
 const ToDoItem = require("./models/ToDoItem")
-const Course = require('./models/Course')
-const Schedule = require('./models/Schedule')
+const Restaurant = require('./models/Restaurant')
+const RestaurantList = require('./models/RestaurantList')
 
 // *********************************************************** //
 //  Loading JSON datasets
@@ -203,7 +203,7 @@ app.get('/upsertDB',
 app.post('/restaurants/byBorough',
   async (req,res,next) => {
     const {borough} = req.body;
-    const restaurants = await Restaurants.find({borough:borough})
+    const restaurants = await Restaurant.find({borough:borough})
     res.locals.restaurants = restaurants
     res.render('reslist')
   }
