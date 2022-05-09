@@ -134,7 +134,7 @@ app.post('/restaurants/byBorough',
     const {borough} = req.body;
     const restaurants = await Restaurant.find({borough:borough})
     res.locals.restaurants = restaurants
-    res.render('restaurantlist')
+    res.render('restaurantList')
   }
 )
 
@@ -143,7 +143,7 @@ app.post('/restaurants/byCuisine',
     const {cuisine} = req.body;
     const restaurants = await Restaurant.find({cuisine:cuisine})
     res.locals.restaurants = restaurants
-    res.render('restaurantlist')
+    res.render('restaurantList')
   }
 )
 
