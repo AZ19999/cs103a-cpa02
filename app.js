@@ -53,6 +53,29 @@ db.once('open', function() {console.log("we are connected!!!")});
 // *********************************************************** //
 const app = express();
 
+var store = new MongoDBStore({
+  uri: mongodb_URI,
+  collection: 'mySessions'
+});
+
+// Catch errors
+store.on('error', function(error) {
+  console.log(error);
+});
+
+app.use(require('express-session')({
+  secret: 'This is a secret',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  store: store,
+  // Boilerplate options, see:
+  // * https://www.npmjs.com/package/express-session#resave
+  // * https://www.npmjs.com/package/express-session#saveuninitialized
+  resave: true,
+  saveUninitialized: true
+}));
+
 // Here we specify that we will be using EJS as our view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -72,11 +95,10 @@ app.use(cookieParser());
 // Here we specify that static files will be in the public folder
 app.use(express.static(path.join(__dirname, "public")));
 
-
 // Here we enable session handling using cookies
 app.use(
   session({
-    secret: "zzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds", // this ought to be hidden in process.env.SECRET
+    secret: "zzzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds", // this ought to be hidden in process.env.SECRET
     resave: false,
     saveUninitialized: false
   })
