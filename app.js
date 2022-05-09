@@ -14,6 +14,7 @@ const session = require("express-session"); // to handle sessions using cookies
 const debug = require("debug")("personalapp:server"); 
 const layouts = require("express-ejs-layouts");
 const axios = require("axios")
+var MongoDBStore = require('connect-mongodb-session')(session);
 
 // *********************************************************** //
 //  Loading models
