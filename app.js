@@ -69,7 +69,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Here we specify that static files will be in the public folder
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname + '../public'));
 
 // Here we enable session handling using cookies
 app.use(
