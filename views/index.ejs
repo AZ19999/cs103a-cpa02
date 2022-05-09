@@ -11,7 +11,7 @@
     
     <% if (true || loggedIn) {%>  
         <form method="post" action="/restaurants/byBorough"> 
-            Show Restaurants by by Borough: 
+            Show Restaurants by Borough: 
               <input type="text" name="borough" 
                      placeholder="e.g. Brooklyn">
             <input type="submit">
@@ -20,12 +20,12 @@
         <br>
 
         <form method="post" action="/restaurants/byCuisine"> 
-            Show Restaurants by by Cuisine: 
+            Show Restaurants by Cuisine: 
               <input type="text" name="cuisine" 
                      placeholder="e.g. Chinese">
             <input type="submit">
         </form>
-
+        <br>
         <a href="/resList/show">Show your list of restaurants</a>
     <% } %>
 
