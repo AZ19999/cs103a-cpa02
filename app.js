@@ -35,7 +35,15 @@ const mongoose = require( 'mongoose' );
 const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
 
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+//mongoose.connect(mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+  () => {
+    console.log('Connected to MongoDB');
+  }
+);
 // fix deprecation warnings
 mongoose.set('useFindAndModify', false); 
 mongoose.set('useCreateIndex', true);
@@ -69,8 +77,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Here we specify that static files will be in the public folder
-//app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(__dirname + '../public'));
+app.use(express.static(path.join(__dirname, "public")));
+
 
 // Here we enable session handling using cookies
 app.use(
