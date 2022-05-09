@@ -158,7 +158,7 @@ app.post('/restaurants/byBorough',
     const {borough} = req.body;
     const restaurants = await Restaurant.find({borough:borough})
     res.locals.restaurants = restaurants
-    res.render('restaurantList')
+    res.render('RestaurantList')
   }
 )
 
@@ -167,7 +167,7 @@ app.post('/restaurants/byCuisine',
     const {cuisine} = req.body;
     const restaurants = await Restaurant.find({cuisine:cuisine})
     res.locals.restaurants = restaurants
-    res.render('restaurantList')
+    res.render('RestaurantList')
   }
 )
 
@@ -253,8 +253,8 @@ app.use(function(err, req, res, next) {
 //Here we set the port to use between 1024 and 65535  (2^16-1)
 const port = process.env.PORT || "5000";
 console.log('connecting on port '+port)
-app.set("port", port);
 
+app.set("port", port);
 
 // and now we startup the server listening on that port
 const http = require("http");
