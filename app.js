@@ -32,7 +32,9 @@ const restaurants = require('./public/data/restaurants.json')
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
-const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
+const mongodb_URI = process.env.mongodb_URI
+//const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
+
 
 mongoose.createConnection( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
