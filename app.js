@@ -33,7 +33,6 @@ const restaurants = require('./public/data/restaurants.json')
 
 const mongoose = require( 'mongoose' );
 const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
-//const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 mongoose.createConnection( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -151,7 +150,6 @@ app.post('/restaurants/byCuisine',
 
 
 app.get('/restaurants/show/:restaurantId',
-  // show all info about a course given its courseid
   async (req,res,next) => {
     const {restaurantId} = req.params;
     const restaurant = await Restaurant.findOne({_id:restaurantId})
@@ -195,7 +193,6 @@ app.get('/resList/show',
 )
 
 app.get('/resList/remove/:restaurantId',
-  // remove a course from the user's schedule
   async (req,res,next) => {
     try {
       await RestaurantList.remove(
@@ -232,7 +229,9 @@ app.use(function(err, req, res, next) {
 // *********************************************************** //
 //Here we set the port to use between 1024 and 65535  (2^16-1)
 const port = process.env.PORT || "5000";
+console.log('connecting on port '+port)
 app.set("port", port);
+
 
 // and now we startup the server listening on that port
 const http = require("http");
