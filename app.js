@@ -35,7 +35,7 @@ const mongoose = require( 'mongoose' );
 const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
 //const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.createConnection( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
 mongoose.set('useFindAndModify', false); 
 mongoose.set('useCreateIndex', true);
