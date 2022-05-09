@@ -32,11 +32,11 @@ const restaurants = require('./public/data/restaurants.json')
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
-const mongodb_URI = process.env.mongodb_URI
-//const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
+//const mongodb_URI = process.env.mongodb_URI
+const mongodb_URI = 'mongodb+srv://AlexZhu:Baccus23!@cluster0.smai9.mongodb.net/sample_restaurants?retryWrites=true&w=majority'
 
 
-mongoose.createConnection( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
 mongoose.set('useFindAndModify', false); 
 mongoose.set('useCreateIndex', true);
@@ -44,9 +44,6 @@ mongoose.set('useCreateIndex', true);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {console.log("we are connected!!!")});
-
-
-
 
 
 // *********************************************************** //
@@ -237,6 +234,7 @@ app.set("port", port);
 
 // and now we startup the server listening on that port
 const http = require("http");
+const { reset } = require("nodemon");
 const server = http.createServer(app);
 
 server.listen(port);
